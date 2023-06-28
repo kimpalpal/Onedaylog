@@ -1,15 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import { StHeader, StLogo, StBtnBox } from './Header';
+
+import { useNavigate } from 'react-router-dom';
+import TodoList from './componentsdetail/TodoList';
+
 function LoginHeader() {
+  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const openModal = () => {
+    setIsOpen(true);
+  };
+  const LogoutBtn = () => navigate('/');
   return (
-    <StHeader>
-      <StLogo>한줄일기</StLogo>
-      <StBtnBox>
-        <StNewPageBtn>새 포스팅</StNewPageBtn>
-        <StImage></StImage>
-      </StBtnBox>
-    </StHeader>
+    <>
+      <StHeader>
+        <StLogo>한줄일기</StLogo>
+        <StBtnBox>
+          <StNewPageBtn onClick={openModal}>새 포스팅</StNewPageBtn>
+          <StLogOutBtn onClick={LogoutBtn}>로그아웃</StLogOutBtn>
+          <StImage></StImage>
+        </StBtnBox>
+      </StHeader>
+      {isOpen && <TodoList setIsOpen={setIsOpen} />}
+    </>
   );
 }
 
@@ -23,6 +37,7 @@ const StNewPageBtn = styled.button`
   height: 30px;
   font-size: 12px;
   font-weight: 600;
+  font-family: 'inter', sans-serif;
   border: 1px solid #6d55ff;
   margin-right: 15px;
   &:hover {
@@ -32,6 +47,19 @@ const StNewPageBtn = styled.button`
     cursor: pointer;
     font-weight: bolder;
   }
+`;
+
+const StLogOutBtn = styled.button`
+  color: #6d55ff;
+  background-color: rgb(169, 224, 241, 42%);
+  border-radius: 20px;
+  width: 67px;
+  height: 30px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'inter', sans-serif;
+  border: 1px solid #e8e8f8;
+  margin-right: 15px;
 `;
 
 const StImage = styled.button`

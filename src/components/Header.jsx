@@ -1,14 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from 'styled-components';
+import HeaderJoin from './componentsdetail/HeaderJoin';
+import HeaderSign from './componentsdetail/HeaderSign';
 function Header() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [joinOpen, setJoinOpen] = useState(false);
+  const openModal = () => {
+    setIsOpen(true);
+  };
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  const openJoinModal = () => {
+    setJoinOpen(true);
+  };
+  const closeJoinModal = () => {
+    setJoinOpen(false);
+  };
   return (
-    <StHeader>
-      <StLogo>한줄일기</StLogo>
-      <StBtnBox>
-        <StLoginBtn>로그인</StLoginBtn>
-        <StSignupBtn>회원가입</StSignupBtn>
-      </StBtnBox>
-    </StHeader>
+    <>
+      <StHeader>
+        <StLogo>한줄일기</StLogo>
+        <StBtnBox>
+          <StLoginBtn onClick={openJoinModal}>로그인</StLoginBtn>
+          <StBtn onClick={openModal}>회원가입</StBtn>
+        </StBtnBox>
+      </StHeader>
+      {joinOpen && <HeaderSign closeJoinModal={closeJoinModal} />}
+      {isOpen && <HeaderJoin closeModal={closeModal} />}
+    </>
   );
 }
 
@@ -51,7 +71,7 @@ const StLoginBtn = styled.button`
   }
 `;
 
-const StSignupBtn = styled.button`
+export const StBtn = styled.button`
   background-color: #6d55ff;
   color: #ffffff;
   border-radius: 20px;
@@ -59,6 +79,8 @@ const StSignupBtn = styled.button`
   width: 70px;
   height: 33px;
   font-size: 12px;
+  margin-right: 15px;
+  ${props => props.customStyle};
   &:hover {
     height: 30px;
     color: #6d55ff;
