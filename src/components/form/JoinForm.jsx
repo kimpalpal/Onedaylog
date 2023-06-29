@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import { requestLogin } from '../../server/account';
+import { requestJoin } from '../../server/account';
 import { StDeleteBtn } from '../Main';
-import { StBox, StModalBox, StModalContents } from './TodoList';
-function HeaderSign({ closeJoinModal }) {
+import { StBox, StModalBox, StModalContents } from '../componentsdetail/TodoList';
+
+function JoinForm({ closeModal }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const Navigate = useNavigate();
+  const [factpassword, setFactPassword] = useState('');
+
   const onChange = event => {
     const {
       target: { name, value }
@@ -18,35 +19,37 @@ function HeaderSign({ closeJoinModal }) {
     if (name === 'password') {
       setPassword(value);
     }
+    if (name === 'factpassword') {
+      setFactPassword(value);
+    }
   };
-  const Signsubmit = async e => {
-    e.preventDefault();
-    if (!email || !password) {
-      return alert('전부 다 입력되지 않았습니다.');
-    } else {
-      try {
-        requestLogin(email, password);
 
-        Navigate('/123');
-      } catch (error) {
-        console.log(error);
-      }
+  const joinsubmit = async e => {
+    e.preventDefault();
+
+    if (!email || !password || !factpassword) {
+      return alert('전부 다 입력되지 않았습니다.');
+    }
+
+    if (password === factpassword) {
+      requestJoin(email, password);
       setEmail('');
       setPassword('');
+      setFactPassword('');
     }
   };
   return (
-    <form onSubmit={Signsubmit}>
+    <form onSubmit={joinsubmit}>
       <StModalBox
         onClick={event => {
           if (event.target === event.currentTarget) {
-            closeJoinModal();
+            closeModal();
           }
         }}
       >
         <StModalContents>
           <StBox>
-            <StDeleteBtn type="button" onClick={closeJoinModal}>
+            <StDeleteBtn type="button" onClick={closeModal}>
               닫기
             </StDeleteBtn>
           </StBox>
@@ -65,15 +68,22 @@ function HeaderSign({ closeJoinModal }) {
             value={password}
             onChange={onChange}
           ></StInput>
-          <StSignBtn type="submit">로그인</StSignBtn>
-          <StjoinBtn type="button">회원가입</StjoinBtn>
+          <StLeftBox>비밀번호 확인 </StLeftBox>
+          <StInput
+            placeholder="비밀번호를 입력해주세요."
+            type="password"
+            name="factpassword"
+            value={factpassword}
+            onChange={onChange}
+          ></StInput>
+          <StjoinBtn type="submit">회원가입</StjoinBtn>
         </StModalContents>
       </StModalBox>
     </form>
   );
 }
 
-export default HeaderSign;
+export default JoinForm;
 
 const StInput = styled.input`
   border: solid 1px #e8e8e8;
@@ -102,16 +112,5 @@ const StjoinBtn = styled.button`
   text-align: center;
   color: #ffffff;
   background-color: #0085ff;
-  margin-bottom: 10px;
-`;
-const StSignBtn = styled.button`
-  width: 80%;
-  height: 63px;
-  border: solid 0px;
-  border-radius: 20px;
-  font-size: 20px;
-  text-align: center;
-  color: #000000;
-  background-color: #ffffff;
   margin-bottom: 10px;
 `;

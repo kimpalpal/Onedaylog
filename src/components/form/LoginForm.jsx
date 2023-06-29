@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import { requestJoin } from '../../server/account';
+import { requestLogin } from '../../server/account';
 import { StDeleteBtn } from '../Main';
-import { StBox, StModalBox, StModalContents } from './TodoList';
+import { StBox, StModalBox, StModalContents } from '../componentsdetail/TodoList';
 
-function HeaderJoin({ closeModal }) {
+function LoginForm({ closeJoinModal }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [factpassword, setFactPassword] = useState('');
+
+  const Navigate = useNavigate();
 
   const onChange = event => {
     const {
@@ -19,35 +21,36 @@ function HeaderJoin({ closeModal }) {
     if (name === 'password') {
       setPassword(value);
     }
-    if (name === 'factpassword') {
-      setFactPassword(value);
-    }
   };
 
-  const joinsubmit = async e => {
+  const Signsubmit = async e => {
     e.preventDefault();
-    if (!email || !password || !factpassword) {
+    if (!email || !password) {
       return alert('전부 다 입력되지 않았습니다.');
-    }
-    if (password === factpassword) {
-      requestJoin(email, password);
+    } else {
+      try {
+        requestLogin(email, password);
+
+        Navigate('/123');
+      } catch (error) {
+        console.log(error);
+      }
       setEmail('');
       setPassword('');
-      setFactPassword('');
     }
   };
   return (
-    <form onSubmit={joinsubmit}>
+    <form onSubmit={Signsubmit}>
       <StModalBox
         onClick={event => {
           if (event.target === event.currentTarget) {
-            closeModal();
+            closeJoinModal();
           }
         }}
       >
         <StModalContents>
           <StBox>
-            <StDeleteBtn type="button" onClick={closeModal}>
+            <StDeleteBtn type="button" onClick={closeJoinModal}>
               닫기
             </StDeleteBtn>
           </StBox>
@@ -66,22 +69,15 @@ function HeaderJoin({ closeModal }) {
             value={password}
             onChange={onChange}
           ></StInput>
-          <StLeftBox>비밀번호 확인 </StLeftBox>
-          <StInput
-            placeholder="비밀번호를 입력해주세요."
-            type="password"
-            name="factpassword"
-            value={factpassword}
-            onChange={onChange}
-          ></StInput>
-          <StjoinBtn type="submit">회원가입</StjoinBtn>
+          <StSignBtn type="submit">로그인</StSignBtn>
+          <StjoinBtn type="button">회원가입</StjoinBtn>
         </StModalContents>
       </StModalBox>
     </form>
   );
 }
 
-export default HeaderJoin;
+export default LoginForm;
 
 const StInput = styled.input`
   border: solid 1px #e8e8e8;
@@ -110,5 +106,16 @@ const StjoinBtn = styled.button`
   text-align: center;
   color: #ffffff;
   background-color: #0085ff;
+  margin-bottom: 10px;
+`;
+const StSignBtn = styled.button`
+  width: 80%;
+  height: 63px;
+  border: solid 0px;
+  border-radius: 20px;
+  font-size: 20px;
+  text-align: center;
+  color: #000000;
+  background-color: #ffffff;
   margin-bottom: 10px;
 `;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import HeaderJoin from './componentsdetail/HeaderJoin';
-import HeaderSign from './componentsdetail/HeaderSign';
+import JoinForm from './form/JoinForm';
+import LoginForm from './form/LoginForm';
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [joinOpen, setJoinOpen] = useState(false);
@@ -26,8 +26,8 @@ function Header() {
           <StBtn onClick={openModal}>회원가입</StBtn>
         </StBtnBox>
       </StHeader>
-      {joinOpen && <HeaderSign closeJoinModal={closeJoinModal} />}
-      {isOpen && <HeaderJoin closeModal={closeModal} />}
+      {joinOpen && <LoginForm closeJoinModal={closeJoinModal} />}
+      {isOpen && <JoinForm closeModal={closeModal} />}
     </>
   );
 }
