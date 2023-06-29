@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import { StBtnBox, StHeader, StLogo } from './Header';
-
 import { useNavigate } from 'react-router-dom';
 import PostForm from './form/PostForm';
 
 function LoginHeader() {
+
   const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -24,8 +24,6 @@ function LoginHeader() {
         <StBtnBox>
           <StNewPageBtn onClick={openModal}>새 포스팅</StNewPageBtn>
           <StLogOutBtn onClick={LogoutBtn}>로그아웃</StLogOutBtn>
-
-          <StImage />
         </StBtnBox>
       </StHeader>
 
