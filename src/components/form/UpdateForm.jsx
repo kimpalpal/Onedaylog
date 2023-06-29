@@ -1,30 +1,34 @@
 import React, { useState } from 'react';
-import { styled } from 'styled-components';
-import { StBtn } from '../Header';
 import { useDispatch } from 'react-redux';
-import { updataList } from '../../redux/modules/MainList';
-function UpdateList({ id, setIsOpen, detail, title }) {
-  const [newTitle, setnewTitle] = useState(title);
-  const [newDetail, setnewDetail] = useState(detail);
+import { styled } from 'styled-components';
+import { updateList } from '../../redux/modules/MainList';
+import { StBtn } from '../Header';
 
+function UpdateForm({ id, setIsOpen, detail, title }) {
   const dispatch = useDispatch();
+
+  const [newTitle, setNewTitle] = useState(title);
+  const [newDetail, setNewDetail] = useState(detail);
+
   //리스트 창 닫기
   const closeModal = () => {
-    setnewTitle('');
-    setnewDetail('');
+    setNewTitle('');
+    setNewDetail('');
     setIsOpen(false);
   };
+
   //리스트 입력 값
   const newTitleValue = e => {
-    setnewTitle(e.target.value);
+    setNewTitle(e.target.value);
   };
 
   const newDetailValue = e => {
-    setnewDetail(e.target.value);
+    setNewDetail(e.target.value);
   };
+
   //리스트 수정
   const updateBtn = (id, newTitle, newDetail) => {
-    dispatch(updataList(id, newTitle, newDetail));
+    dispatch(updateList(id, newTitle, newDetail));
   };
 
   const UpdateBox = event => {
@@ -63,7 +67,7 @@ function UpdateList({ id, setIsOpen, detail, title }) {
   );
 }
 
-export default UpdateList;
+export default UpdateForm;
 
 export const StModalBox = styled.div`
   position: fixed;

@@ -1,31 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { styled } from 'styled-components';
 import { removeList } from '../redux/modules/MainList';
 import { StBtn } from './Header';
-import UpdateList from './componentsdetail/UpdateList';
+import UpdateForm from './form/UpdateForm';
 function Main() {
-  const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const list = useSelector(state => state.MainList);
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => {
     setIsOpen(true);
   };
 
-  useEffect(() => {
-    localStorage.setItem('title', list.title);
-    localStorage.setItem('title', list.detail);
-  }, [list.title, list.detail]);
-
-  const dispatch = useDispatch();
-  //삭제 버튼입력추가
-  // const upDateBtn = (id, newTitle, newDetail) => {
-  //   dispatch(updataList(id, newTitle, newDetail));
-  // };
   const deleteBtn = id => {
     dispatch(removeList(id));
   };
+
   return list.map(item => {
     return (
       <>
@@ -33,9 +26,11 @@ function Main() {
           <StBox style={{ position: 'relative' }}>
             <StTitle>
               {item.title}
+
               <StBtn customStyle={{ position: 'absolute', right: '80px' }} onClick={openModal}>
                 수정
               </StBtn>
+
               <StDeleteBtn
                 customStyle={{ position: 'absolute', right: 0 }}
                 onClick={() => deleteBtn(item.id)}
@@ -43,17 +38,13 @@ function Main() {
                 삭제
               </StDeleteBtn>
             </StTitle>
+
             <StDetail>{item.detail}</StDetail>
           </StBox>
         </StList>
+
         {isOpen && (
-          <UpdateList
-            id={item.id}
-            title={item.title}
-            detail={item.detail}
-            setIsOpen={setIsOpen}
-            // upDateBtn={upDateBtn}
-          />
+          <UpdateForm id={item.id} title={item.title} detail={item.detail} setIsOpen={setIsOpen} />
         )}
       </>
     );

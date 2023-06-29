@@ -5,27 +5,34 @@ import LoginForm from './form/LoginForm';
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [joinOpen, setJoinOpen] = useState(false);
+
   const openModal = () => {
     setIsOpen(true);
   };
+
   const closeModal = () => {
     setIsOpen(false);
   };
+
   const openJoinModal = () => {
     setJoinOpen(true);
   };
+
   const closeJoinModal = () => {
     setJoinOpen(false);
   };
+
   return (
     <>
       <StHeader>
         <StLogo>한줄일기</StLogo>
+
         <StBtnBox>
           <StLoginBtn onClick={openJoinModal}>로그인</StLoginBtn>
           <StBtn onClick={openModal}>회원가입</StBtn>
         </StBtnBox>
       </StHeader>
+
       {joinOpen && <LoginForm closeJoinModal={closeJoinModal} />}
       {isOpen && <JoinForm closeModal={closeModal} />}
     </>
@@ -33,6 +40,7 @@ function Header() {
 }
 
 export default Header;
+
 export const StHeader = styled.header`
   background-color: #ffffff;
   width: 100%;

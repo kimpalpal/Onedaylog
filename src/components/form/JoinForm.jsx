@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import { requestJoin } from '../../server/account';
 import { StDeleteBtn } from '../Main';
-import { StBox, StModalBox, StModalContents } from '../componentsdetail/TodoList';
+import { StBox, StModalBox, StModalContents } from './PostForm';
 
 function JoinForm({ closeModal }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [factpassword, setFactPassword] = useState('');
+  const [passwordCheck, setPasswordCheck] = useState('');
 
   const onChange = event => {
     const {
@@ -19,27 +19,27 @@ function JoinForm({ closeModal }) {
     if (name === 'password') {
       setPassword(value);
     }
-    if (name === 'factpassword') {
-      setFactPassword(value);
+    if (name === 'passwordCheck') {
+      setPasswordCheck(value);
     }
   };
 
-  const joinsubmit = async e => {
+  const joinSubmit = async e => {
     e.preventDefault();
 
-    if (!email || !password || !factpassword) {
+    if (!email || !password || !passwordCheck) {
       return alert('전부 다 입력되지 않았습니다.');
     }
 
-    if (password === factpassword) {
+    if (password === passwordCheck) {
       requestJoin(email, password);
       setEmail('');
       setPassword('');
-      setFactPassword('');
+      setPasswordCheck('');
     }
   };
   return (
-    <form onSubmit={joinsubmit}>
+    <form onSubmit={joinSubmit}>
       <StModalBox
         onClick={event => {
           if (event.target === event.currentTarget) {
@@ -53,30 +53,32 @@ function JoinForm({ closeModal }) {
               닫기
             </StDeleteBtn>
           </StBox>
+
           <StLeftBox>아이디 </StLeftBox>
-          <StInput
-            placeholder="이메일 형식으로"
-            name="email"
-            value={email}
-            onChange={onChange}
-          ></StInput>
+
+          <StInput placeholder="이메일 형식으로" name="email" value={email} onChange={onChange} />
+
           <StLeftBox>비밀번호 </StLeftBox>
+
           <StInput
             placeholder="비밀번호를 입력해주세요."
             name="password"
             type="password"
             value={password}
             onChange={onChange}
-          ></StInput>
+          />
+
           <StLeftBox>비밀번호 확인 </StLeftBox>
+
           <StInput
             placeholder="비밀번호를 입력해주세요."
             type="password"
-            name="factpassword"
-            value={factpassword}
+            name="passwordCheck"
+            value={passwordCheck}
             onChange={onChange}
-          ></StInput>
-          <StjoinBtn type="submit">회원가입</StjoinBtn>
+          />
+
+          <StJoinBtn type="submit">회원가입</StJoinBtn>
         </StModalContents>
       </StModalBox>
     </form>
@@ -103,7 +105,7 @@ const StLeftBox = styled.label`
   font-size: 15px;
   font-family: 'inter', sans-serif;
 `;
-const StjoinBtn = styled.button`
+const StJoinBtn = styled.button`
   width: 80%;
   height: 63px;
   border: solid 0px;

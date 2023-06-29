@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { requestLogin } from '../../server/account';
 import { StDeleteBtn } from '../Main';
-import { StBox, StModalBox, StModalContents } from '../componentsdetail/TodoList';
+import { StBox, StModalBox, StModalContents } from './PostForm';
 
 function LoginForm({ closeJoinModal }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
 
   const onChange = event => {
     const {
@@ -23,7 +23,7 @@ function LoginForm({ closeJoinModal }) {
     }
   };
 
-  const Signsubmit = async e => {
+  const signSubmit = async e => {
     e.preventDefault();
     if (!email || !password) {
       return alert('전부 다 입력되지 않았습니다.');
@@ -31,7 +31,7 @@ function LoginForm({ closeJoinModal }) {
       try {
         requestLogin(email, password);
 
-        Navigate('/123');
+        navigate('/123');
       } catch (error) {
         console.log(error);
       }
@@ -40,7 +40,7 @@ function LoginForm({ closeJoinModal }) {
     }
   };
   return (
-    <form onSubmit={Signsubmit}>
+    <form onSubmit={signSubmit}>
       <StModalBox
         onClick={event => {
           if (event.target === event.currentTarget) {
@@ -54,23 +54,23 @@ function LoginForm({ closeJoinModal }) {
               닫기
             </StDeleteBtn>
           </StBox>
+
           <StLeftBox>아이디 </StLeftBox>
-          <StInput
-            placeholder="이메일 형식으로"
-            name="email"
-            value={email}
-            onChange={onChange}
-          ></StInput>
+
+          <StInput placeholder="이메일 형식으로" name="email" value={email} onChange={onChange} />
+
           <StLeftBox>비밀번호 </StLeftBox>
+
           <StInput
             placeholder="비밀번호를 입력해주세요."
             name="password"
             type="password"
             value={password}
             onChange={onChange}
-          ></StInput>
+          />
+
           <StSignBtn type="submit">로그인</StSignBtn>
-          <StjoinBtn type="button">회원가입</StjoinBtn>
+          <StJoinBtn type="button">회원가입</StJoinBtn>
         </StModalContents>
       </StModalBox>
     </form>
@@ -97,7 +97,7 @@ const StLeftBox = styled.label`
   font-size: 15px;
   font-family: 'inter', sans-serif;
 `;
-const StjoinBtn = styled.button`
+const StJoinBtn = styled.button`
   width: 80%;
   height: 63px;
   border: solid 0px;

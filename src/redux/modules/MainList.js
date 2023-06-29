@@ -1,7 +1,8 @@
 const ADD_LIST = 'MainList/ADD_LIST';
 const REMOVE_LIST = 'MainList/REMOVE_LIST';
-const Modification_LIST = 'MainList/Modification_LIST';
+const MODIFICATION_LIST = 'MainList/MODIFICATION_LIST';
 const UPDATE_LIST = 'MainList/UPDATE_LIST';
+
 export const addList = list => ({
   type: ADD_LIST,
   payload: list
@@ -12,14 +13,16 @@ export const removeList = list => ({
   payload: list
 });
 
-export const ModificationList = list => ({
-  type: Modification_LIST,
+export const modificationList = list => ({
+  type: MODIFICATION_LIST,
   payload: list
 });
-export const updataList = (id, newTitle, newDetail) => ({
+
+export const updateList = (id, newTitle, newDetail) => ({
   type: UPDATE_LIST,
   payload: { id, newTitle, newDetail }
 });
+
 const initialState = [
   {
     id: crypto.randomUUID(),
@@ -38,10 +41,13 @@ const MainList = (state = initialState, action) => {
   switch (action.type) {
     case ADD_LIST:
       return [...state, action.payload];
+
     case REMOVE_LIST:
       return state.filter(list => list.id !== action.payload);
-    case Modification_LIST:
+
+    case MODIFICATION_LIST:
       return state.map(list => (list.id === action.payload.id ? action.payload : list));
+
     case UPDATE_LIST:
       const { id, newTitle, newDetail } = action.payload;
 
@@ -51,6 +57,7 @@ const MainList = (state = initialState, action) => {
         }
         return list;
       });
+
     default:
       return state;
   }

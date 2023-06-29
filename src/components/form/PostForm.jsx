@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
-import { styled } from 'styled-components';
-import { StBtn } from '../Header';
 import { useDispatch } from 'react-redux';
+import { styled } from 'styled-components';
 import { addList } from '../../redux/modules/MainList';
+import { StBtn } from '../Header';
 
-function TodoList({ setIsOpen }) {
+function PostForm({ setIsOpen }) {
+  const dispatch = useDispatch();
+
   const [title, setTitle] = useState('');
   const [detail, setDetail] = useState('');
-  const dispatch = useDispatch();
+
   //리스트 창 닫기
   const closeModal = () => {
     setTitle('');
     setDetail('');
     setIsOpen(false);
   };
+
   //리스트 입력 값
   const titleValue = e => {
     setTitle(e.target.value);
@@ -22,6 +25,7 @@ function TodoList({ setIsOpen }) {
   const detailValue = e => {
     setDetail(e.target.value);
   };
+
   //리스트 작성 추가
   const addSubmit = e => {
     const newList = {
@@ -35,6 +39,7 @@ function TodoList({ setIsOpen }) {
     setDetail('');
     closeModal();
   };
+
   return (
     <form onSubmit={addSubmit}>
       <StModalBox>
@@ -63,7 +68,7 @@ function TodoList({ setIsOpen }) {
   );
 }
 
-export default TodoList;
+export default PostForm;
 
 export const StModalBox = styled.div`
   position: fixed;

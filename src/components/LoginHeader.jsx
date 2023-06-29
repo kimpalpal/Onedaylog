@@ -1,28 +1,35 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import { StHeader, StLogo, StBtnBox } from './Header';
+import { StBtnBox, StHeader, StLogo } from './Header';
 
 import { useNavigate } from 'react-router-dom';
-import TodoList from './componentsdetail/TodoList';
+import PostForm from './form/PostForm';
 
 function LoginHeader() {
-  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+
+  const [isOpen, setIsOpen] = useState(false);
+
   const openModal = () => {
     setIsOpen(true);
   };
+
   const LogoutBtn = () => navigate('/');
+
   return (
     <>
       <StHeader>
         <StLogo>한줄일기</StLogo>
+
         <StBtnBox>
           <StNewPageBtn onClick={openModal}>새 포스팅</StNewPageBtn>
           <StLogOutBtn onClick={LogoutBtn}>로그아웃</StLogOutBtn>
-          <StImage></StImage>
+
+          <StImage />
         </StBtnBox>
       </StHeader>
-      {isOpen && <TodoList setIsOpen={setIsOpen} />}
+
+      {isOpen && <PostForm setIsOpen={setIsOpen} />}
     </>
   );
 }
@@ -30,22 +37,29 @@ function LoginHeader() {
 export default LoginHeader;
 
 const StNewPageBtn = styled.button`
-  color: #6d55ff;
-  background-color: #ffffff;
-  border-radius: 20px;
   width: 67px;
   height: 30px;
+
+  margin-right: 15px;
+
+  background-color: #ffffff;
+
+  border: 1px solid #6d55ff;
+  border-radius: 20px;
+
   font-size: 12px;
   font-weight: 600;
-  font-family: 'inter', sans-serif;
-  border: 1px solid #6d55ff;
-  margin-right: 15px;
+  color: #6d55ff;
+
   &:hover {
     background-color: #6d55ff;
-    color: #ffffff;
+
     box-shadow: 2px 2px 2px 2px #e8e8f8;
-    cursor: pointer;
+
+    color: #ffffff;
     font-weight: bolder;
+
+    cursor: pointer;
   }
 `;
 
@@ -57,7 +71,6 @@ const StLogOutBtn = styled.button`
   height: 30px;
   font-size: 12px;
   font-weight: 600;
-  font-family: 'inter', sans-serif;
   border: 1px solid #e8e8f8;
   margin-right: 15px;
 `;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getPostList } from './server/post';
 import Router from './shared/Router';
+import { GlobalStyle } from './styles/GlobalStyle';
 
 function App() {
   const [list, setList] = useState([]);
@@ -17,6 +18,7 @@ function App() {
 
   return (
     <>
+      <GlobalStyle />
       <Router />
 
       {list.map(item => {
