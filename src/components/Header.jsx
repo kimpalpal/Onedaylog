@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import JoinForm from './form/JoinForm';
 import LoginForm from './form/LoginForm';
+
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [joinOpen, setJoinOpen] = useState(false);
