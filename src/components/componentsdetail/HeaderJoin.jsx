@@ -1,9 +1,9 @@
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import { StModalBox, StModalContents, StBox } from './TodoList';
-import { StDeleteBtn } from '../Main';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase';
+import { StDeleteBtn } from '../Main';
+import { StBox, StModalBox, StModalContents } from './TodoList';
 
 function HeaderJoin({ closeModal }) {
   const [email, setEmail] = useState('');
@@ -41,7 +41,13 @@ function HeaderJoin({ closeModal }) {
   };
   return (
     <form onSubmit={joinsubmit}>
-      <StModalBox>
+      <StModalBox
+        onClick={event => {
+          if (event.target === event.currentTarget) {
+            closeModal();
+          }
+        }}
+      >
         <StModalContents>
           <StBox>
             <StDeleteBtn type="button" onClick={closeModal}>

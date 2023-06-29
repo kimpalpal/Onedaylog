@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { styled } from 'styled-components';
-import { StModalBox, StModalContents, StBox } from './TodoList';
-import { StDeleteBtn } from '../Main';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../firebase';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { styled } from 'styled-components';
+import { auth } from '../../firebase';
+import { StDeleteBtn } from '../Main';
+import { StBox, StModalBox, StModalContents } from './TodoList';
 function HeaderSign({ closeJoinModal }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -38,7 +38,13 @@ function HeaderSign({ closeJoinModal }) {
   };
   return (
     <form onSubmit={Signsubmit}>
-      <StModalBox>
+      <StModalBox
+        onClick={event => {
+          if (event.target === event.currentTarget) {
+            closeJoinModal();
+          }
+        }}
+      >
         <StModalContents>
           <StBox>
             <StDeleteBtn type="button" onClick={closeJoinModal}>
