@@ -1,8 +1,7 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import { auth } from '../../server/firebase';
+import { requestLogin } from '../../server/account';
 import { StDeleteBtn } from '../Main';
 import { StBox, StModalBox, StModalContents } from './TodoList';
 function HeaderSign({ closeJoinModal }) {
@@ -26,8 +25,8 @@ function HeaderSign({ closeJoinModal }) {
       return alert('전부 다 입력되지 않았습니다.');
     } else {
       try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        console.log(userCredential);
+        requestLogin(email, password);
+
         Navigate('/123');
       } catch (error) {
         console.log(error);

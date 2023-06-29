@@ -1,7 +1,6 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import { auth } from '../../server/firebase';
+import { requestJoin } from '../../server/account';
 import { StDeleteBtn } from '../Main';
 import { StBox, StModalBox, StModalContents } from './TodoList';
 
@@ -31,12 +30,10 @@ function HeaderJoin({ closeModal }) {
       return alert('전부 다 입력되지 않았습니다.');
     }
     if (password === factpassword) {
-      return (
-        await createUserWithEmailAndPassword(auth, email, password),
-        setEmail(''),
-        setPassword(''),
-        setFactPassword('')
-      );
+      requestJoin(email, password);
+      setEmail('');
+      setPassword('');
+      setFactPassword('');
     }
   };
   return (
