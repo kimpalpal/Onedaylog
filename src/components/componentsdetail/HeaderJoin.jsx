@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import { auth } from '../../firebase';
+import { auth } from '../../server/firebase';
 import { StDeleteBtn } from '../Main';
 import { StBox, StModalBox, StModalContents } from './TodoList';
 

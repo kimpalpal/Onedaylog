@@ -2,7 +2,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import { auth } from '../../firebase';
+import { auth } from '../../server/firebase';
 import { StDeleteBtn } from '../Main';
 import { StBox, StModalBox, StModalContents } from './TodoList';
 function HeaderSign({ closeJoinModal }) {
