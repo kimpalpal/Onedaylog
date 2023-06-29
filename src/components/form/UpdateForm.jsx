@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { styled } from 'styled-components';
 import { updateList } from '../../redux/modules/MainList';
 import { StBtn } from '../Header';
 
-function UpdateForm({ id, setIsOpen, detail, title }) {
-  const dispatch = useDispatch();
+function UpdateForm({ uid, setIsOpen, detail, title }) {
+  // const dispatch = useDispatch();
 
   const [newTitle, setNewTitle] = useState(title);
   const [newDetail, setNewDetail] = useState(detail);
@@ -27,14 +26,14 @@ function UpdateForm({ id, setIsOpen, detail, title }) {
   };
 
   //리스트 수정
-  const updateBtn = (id, newTitle, newDetail) => {
-    dispatch(updateList(id, newTitle, newDetail));
+  const updateBtn = (uid, newTitle, newDetail) => {
+    updateList(uid, newTitle, newDetail);
   };
 
   const UpdateBox = event => {
     event.preventDefault();
 
-    updateBtn(id, newTitle, newDetail);
+    updateBtn(uid, newTitle, newDetail);
 
     closeModal();
   };

@@ -1,50 +1,65 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect, } from 'react';
 import { styled } from 'styled-components';
 import { removeList } from '../redux/modules/MainList';
 import { StBtn } from './Header';
 import UpdateForm from './form/UpdateForm';
-function Main() {
-  const dispatch = useDispatch();
+import { getPostList } from '../server/post';
 
-  const list = useSelector(state => state.MainList);
+function Main() {
+  // const dispatch = useDispatch();
+
+  // const list = useSelector(state => state.MainList);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [list, setList] = useState([]);
+
+  const updatePostList = async () =>{
+    const postList = await getPostList();
+
+    setList(postList);
+  }
+
+  useEffect(()=>{
+    updatePostList();
+  },[]);
+
 
   const openModal = () => {
     setIsOpen(true);
   };
 
-  const deleteBtn = id => {
-    dispatch(removeList(id));
+  const deleteBtn = uid => {
+    removeList(uid);
   };
 
   return list.map(item => {
+
+    const {title, detail, uid} = item.data();
+
     return (
       <>
         <StList>
           <StBox style={{ position: 'relative' }}>
             <StTitle>
-              {item.title}
-
+              {title}
               <StBtn customStyle={{ position: 'absolute', right: '80px' }} onClick={openModal}>
                 수정
               </StBtn>
 
               <StDeleteBtn
                 customStyle={{ position: 'absolute', right: 0 }}
-                onClick={() => deleteBtn(item.id)}
+                onClick={() => deleteBtn(uid)}
               >
                 삭제
               </StDeleteBtn>
             </StTitle>
 
-            <StDetail>{item.detail}</StDetail>
+            <StDetail>{detail}</StDetail>
           </StBox>
         </StList>
 
         {isOpen && (
-          <UpdateForm id={item.id} title={item.title} detail={item.detail} setIsOpen={setIsOpen} />
+          <UpdateForm uid={uid} title={title} detail={detail} setIsOpen={setIsOpen} />
         )}
       </>
     );
@@ -52,6 +67,7 @@ function Main() {
 }
 
 export default Main;
+
 const StList = styled.div`
   padding-left: 20px;
   padding-right: 20px;

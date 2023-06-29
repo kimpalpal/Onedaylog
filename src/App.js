@@ -1,27 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { getPostList } from './server/post';
+import React from 'react';
 import Router from './shared/Router';
 import { GlobalStyle } from './styles/GlobalStyle';
 
 function App() {
-  const [list, setList] = useState([]);
+  // const [list, setList] = useState([]);
 
-  const updatePostList = async () => {
-    const postList = await getPostList();
+  // const updatePostList = async () => {
+  //   const postList = await getPostList();
 
-    setList(postList);
-  };
+  //   setList(postList);
+  // };
 
-  useEffect(() => {
-    updatePostList();
-  }, []);
+  // useEffect(() => {
+  //   updatePostList();
+  // }, []);
 
   return (
     <>
       <GlobalStyle />
       <Router />
 
-      {list.map(item => {
+      {/* {list.map(item => {
         const { title, detail } = item.data();
 
         return (
@@ -30,7 +29,7 @@ function App() {
             <p>{detail}</p>
           </div>
         );
-      })}
+      })} */}
     </>
   );
 }
