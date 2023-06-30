@@ -89,7 +89,8 @@ export const StBtn = styled.button`
   height: 33px;
   font-size: 12px;
   margin-right: 15px;
-  ${props => props.customStyle};
+  position: ${props => props.custompostion};
+  right: ${props => props.customright};
   &:hover {
     height: 30px;
     color: #6d55ff;

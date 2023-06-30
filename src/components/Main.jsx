@@ -1,52 +1,51 @@
-import React, { useState, useEffect, } from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 import { removeList } from '../redux/modules/MainList';
 import { StBtn } from './Header';
 import UpdateForm from './form/UpdateForm';
 import { getPostList } from '../server/post';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Main() {
-  // const dispatch = useDispatch();
-  // const list = useSelector(state => state.MainList);
-
+  const dispatch = useDispatch();
+  const userselect = useSelector(state => state.MainList);
   const [isOpen, setIsOpen] = useState(false);
   const [list, setList] = useState([]);
 
-  const updatePostList = async () =>{
+  const updatePostList = async () => {
     const postList = await getPostList();
 
     setList(postList);
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     updatePostList();
-  },[]);
-
+  }, [userselect]);
 
   const openModal = () => {
     setIsOpen(true);
   };
 
   const deleteBtn = uid => {
-    removeList(uid);
+    dispatch(removeList(uid));
   };
 
   return list.map(item => {
-
-    const {title, detail, uid} = item.data();
+    const { title, detail, uid } = item.data();
 
     return (
-      <>
+      <div key={item.uid}>
         <StList>
           <StBox style={{ position: 'relative' }}>
             <StTitle key={title}>
               {title}
-              <StBtn customStyle={{ position: 'absolute', right: '80px' }} onClick={openModal}>
+              <StBtn custompostion={'absolute'} customright={'80px'} onClick={openModal}>
                 수정
               </StBtn>
 
               <StDeleteBtn
-                customStyle={{ position: 'absolute', right: 0 }}
+                custompostion={'absolute'}
+                customright={'0'}
                 onClick={() => deleteBtn(uid)}
               >
                 삭제
@@ -57,10 +56,8 @@ function Main() {
           </StBox>
         </StList>
 
-        {isOpen && (
-          <UpdateForm uid={uid} title={title} detail={detail} setIsOpen={setIsOpen} />
-        )}
-      </>
+        {isOpen && <UpdateForm uid={uid} title={title} detail={detail} setIsOpen={setIsOpen} />}
+      </div>
     );
   });
 }
@@ -105,7 +102,8 @@ export const StDeleteBtn = styled.button`
   height: 33px;
   font-size: 12px;
   margin-right: 15px;
-  ${props => props.customStyle};
+  position: ${props => props.custompostion};
+  right: ${props => props.customright};
   &:hover {
     height: 30px;
     color: #ffffff;

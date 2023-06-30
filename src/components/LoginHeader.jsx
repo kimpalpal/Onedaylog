@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import PostForm from './form/PostForm';
 
 function LoginHeader() {
-
   const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -24,6 +23,7 @@ function LoginHeader() {
         <StBtnBox>
           <StNewPageBtn onClick={openModal}>새 포스팅</StNewPageBtn>
           <StLogOutBtn onClick={LogoutBtn}>로그아웃</StLogOutBtn>
+          <StImage />
         </StBtnBox>
       </StHeader>
 
@@ -77,7 +77,7 @@ const StImage = styled.button`
   cursor: pointer;
   text-decoration: none;
   border-radius: 50%;
-  border: solid 0px;
+  border: solid 1px black;
   color: #d9d9d9;
   width: 25px;
   height: 25px;

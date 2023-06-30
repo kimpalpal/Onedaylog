@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { styled } from 'styled-components';
 import { updateList } from '../../redux/modules/MainList';
 import { StBtn } from '../Header';
+import { StBox, StModalBox, StModalContents, StTextarea } from './PostForm';
 
 function UpdateForm({ uid, setIsOpen, detail, title }) {
   // const dispatch = useDispatch();
@@ -43,13 +43,14 @@ function UpdateForm({ uid, setIsOpen, detail, title }) {
       <StModalBox>
         <StModalContents>
           <StTextarea
-            customStyle={{ fontSize: '18px' }}
+            customfontsize={'18px'}
             placeholder="제목은 생략이 가능해요"
             value={newTitle}
             onChange={newTitleValue}
           ></StTextarea>
           <StTextarea
-            customStyle={{ height: '80%' }}
+            customfontsize={'14px'}
+            customheight={'80%'}
             placeholder="어떤 이야기를 나누고 싶나요?"
             value={newDetail}
             onChange={newDetailValue}
@@ -67,44 +68,3 @@ function UpdateForm({ uid, setIsOpen, detail, title }) {
 }
 
 export default UpdateForm;
-
-export const StModalBox = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-`;
-
-export const StModalContents = styled.div`
-  background-color: #fff;
-  width: 518px;
-  height: 346px;
-  padding: 20px;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-const StTextarea = styled.textarea`
-  font-size: 14px;
-  width: 95%;
-  padding: 10px;
-  border: solid 0px;
-  outline: none;
-  font-family: 'inter', sans-serif;
-  font-weight: bolder;
-  ${props => props.customStyle};
-`;
-
-export const StBox = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-`;

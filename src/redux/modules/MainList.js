@@ -23,19 +23,7 @@ export const updateList = (id, newTitle, newDetail) => ({
   payload: { id, newTitle, newDetail }
 });
 
-const initialState = [
-  {
-    id: crypto.randomUUID(),
-    title: '하루일과 기록',
-    detail: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsam quae aliquam asperiores
-  labore, ratione recusandae enim odio veritatis explicabo vero quos magni alias animi
-  adipisci dolore illo similique, aut tempora!Lorem ipsum dolor sit, amet consectetur
-  adipisicing elit. Ipsam quae aliquam asperiores labore, ratione recusandae enim odio
-  veritatis explicabo vero quos magni alias animi adipisci dolore illo similique, aut
-  tempora!`,
-    isDone: false
-  }
-];
+const initialState = [];
 
 const MainList = (state = initialState, action) => {
   switch (action.type) {
@@ -43,10 +31,10 @@ const MainList = (state = initialState, action) => {
       return [...state, action.payload];
 
     case REMOVE_LIST:
-      return state.filter(list => list.id !== action.payload);
+      return state.filter(list => list.uid !== action.payload);
 
     case MODIFICATION_LIST:
-      return state.map(list => (list.id === action.payload.id ? action.payload : list));
+      return state.map(list => (list.uid === action.payload.uid ? action.payload : list));
 
     case UPDATE_LIST:
       const { id, newTitle, newDetail } = action.payload;

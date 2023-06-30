@@ -30,7 +30,7 @@ function LoginForm({ closeJoinModal }) {
     } else {
       try {
         requestLogin(email, password);
-
+        alert('로그인 되었습니다!');
         navigate('/123');
       } catch (error) {
         console.log(error);
