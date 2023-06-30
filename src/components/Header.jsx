@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import JoinForm from './form/JoinForm';
 import LoginForm from './form/LoginForm';
+
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [joinOpen, setJoinOpen] = useState(false);
@@ -88,7 +89,8 @@ export const StBtn = styled.button`
   height: 33px;
   font-size: 12px;
   margin-right: 15px;
-  ${props => props.customStyle};
+  position: ${props => props.custompostion};
+  right: ${props => props.customright};
   &:hover {
     height: 30px;
     color: #6d55ff;

@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import { addList } from '../../redux/modules/MainList';
 import { StBtn } from '../Header';
+import { addDoc, collection } from 'firebase/firestore';
+import { db } from '../../server/firebase';
+import { useDispatch } from 'react-redux';
 
 function PostForm({ setIsOpen }) {
   const dispatch = useDispatch();
-
   const [title, setTitle] = useState('');
   const [detail, setDetail] = useState('');
-
   //리스트 창 닫기
   const closeModal = () => {
     setTitle('');
@@ -26,15 +26,19 @@ function PostForm({ setIsOpen }) {
     setDetail(e.target.value);
   };
 
-  //리스트 작성 추가
-  const addSubmit = e => {
-    const newList = {
-      id: crypto.randomUUID(),
+  useEffect(() => {}, [dispatch]);
+
+  const addSubmit = async e => {
+    e.preventDefault();
+    const newTodo = {
+      uid: crypto.randomUUID(),
       title,
       detail,
       isDone: false
     };
-    dispatch(addList(newList));
+    const collectionList = collection(db, 'posts');
+    const { id } = await addDoc(collectionList, newTodo);
+    dispatch(addList({ ...newTodo, id }));
     setTitle('');
     setDetail('');
     closeModal();
@@ -45,13 +49,14 @@ function PostForm({ setIsOpen }) {
       <StModalBox>
         <StModalContents>
           <StTextarea
-            customStyle={{ fontSize: '18px' }}
+            customfontsize={'18px'}
             placeholder="제목은 생략이 가능해요"
             value={title}
             onChange={titleValue}
           ></StTextarea>
           <StTextarea
-            customStyle={{ height: '80%' }}
+            customfontsize={'14px'}
+            customheight={'80%'}
             placeholder="어떤 이야기를 나누고 싶나요?"
             value={detail}
             onChange={detailValue}
@@ -94,15 +99,15 @@ export const StModalContents = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const StTextarea = styled.textarea`
-  font-size: 14px;
+export const StTextarea = styled.textarea`
+  font-size: ${props => props.customfontsize};
   width: 95%;
   padding: 10px;
   border: solid 0px;
   outline: none;
   font-family: 'inter', sans-serif;
   font-weight: bolder;
-  ${props => props.customStyle};
+  height: ${props => props.customheight};
 `;
 
 export const StBox = styled.div`

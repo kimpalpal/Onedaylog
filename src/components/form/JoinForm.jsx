@@ -33,9 +33,11 @@ function JoinForm({ closeModal }) {
 
     if (password === passwordCheck) {
       requestJoin(email, password);
+      alert('회원가입 되었습니다!!');
       setEmail('');
       setPassword('');
       setPasswordCheck('');
+      closeModal();
     }
   };
   return (
