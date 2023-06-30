@@ -12,7 +12,6 @@ export const getPostList = async () => {
 
   docsSnap.forEach(doc => {
     initialTodos.push({ id: doc.id, ...doc.data() });
-    console.log(initialTodos);
   });
   return initialTodos;
 };

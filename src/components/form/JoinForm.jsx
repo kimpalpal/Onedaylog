@@ -89,7 +89,7 @@ function JoinForm({ closeModal }) {
 
 export default JoinForm;
 
-const StInput = styled.input`
+export const StInput = styled.input`
   border: solid 1px #e8e8e8;
   border-radius: 8px;
   width: 80%;
