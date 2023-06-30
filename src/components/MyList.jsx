@@ -5,8 +5,8 @@ import { StBtn } from './Header';
 import UpdateForm from './form/UpdateForm';
 import { getPostList } from '../server/post';
 
-function Main() {
-  // const dispatch = useDispatch();
+function MyList() {
+ // const dispatch = useDispatch();
   // const list = useSelector(state => state.MainList);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -65,7 +65,8 @@ function Main() {
   });
 }
 
-export default Main;
+export default MyList;
+
 
 const StList = styled.div`
   padding-left: 20px;
@@ -86,6 +87,7 @@ const StBox = styled.div`
   padding: 20px;
   border-radius: 20px;
 `;
+
 const StTitle = styled.div`
   font-weight: bolder;
   font-size: 24px;
