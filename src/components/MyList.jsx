@@ -1,64 +1,85 @@
-import React, { useState, useEffect, } from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
-import { removeList } from '../redux/modules/MainList';
 import { StBtn } from './Header';
-import UpdateForm from './form/UpdateForm';
 import { getPostList } from '../server/post';
+import { db } from '../server/firebase';
+import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { useSelector } from 'react-redux';
+import UpdateForm from './form/UpdateForm';
 
 function MyList() {
- // const dispatch = useDispatch();
-  // const list = useSelector(state => state.MainList);
-
+  const userselect = useSelector(state => state.MainList);
   const [isOpen, setIsOpen] = useState(false);
   const [list, setList] = useState([]);
-
-  const updatePostList = async () =>{
+  const updatePostList = async () => {
     const postList = await getPostList();
 
     setList(postList);
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     updatePostList();
-  },[]);
-
+  }, [userselect]);
 
   const openModal = () => {
     setIsOpen(true);
   };
 
-  const deleteBtn = uid => {
-    removeList(uid);
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const deleteBtn = async id => {
+    const idRef = doc(db, 'posts', id);
+    await deleteDoc(idRef);
+    setList(prev => prev.filter(item => item.id !== id));
+  };
+
+  const updateBtn = (id, newTitle, newDetail) => {
+    const idRef = doc(db, 'posts', id);
+    updateDoc(idRef, { title: newTitle, detail: newDetail });
+    setList(prev => {
+      return prev.map(item => {
+        if (item.id === id) {
+          return { ...item, title: newTitle, detail: newDetail };
+        } else {
+          return item;
+        }
+      });
+    });
   };
 
   return list.map(item => {
-
-    const {title, detail, uid} = item.data();
-
     return (
       <>
-        <StList>
+        <StList key={item.id}>
           <StBox style={{ position: 'relative' }}>
-            <StTitle key={title}>
-              {title}
-              <StBtn customStyle={{ position: 'absolute', right: '80px' }} onClick={openModal}>
+            <StTitle key={item.title}>
+              {item.title}
+              <StBtn custompostion={'absolute'} customright={'80px'} onClick={openModal}>
                 수정
               </StBtn>
-
               <StDeleteBtn
-                customStyle={{ position: 'absolute', right: 0 }}
-                onClick={() => deleteBtn(uid)}
+                custompostion={'absolute'}
+                customright={0}
+                onClick={() => deleteBtn(item.id)}
               >
                 삭제
               </StDeleteBtn>
             </StTitle>
 
-            <StDetail>{detail}</StDetail>
+            <StDetail>{item.detail}</StDetail>
           </StBox>
         </StList>
 
         {isOpen && (
-          <UpdateForm uid={uid} title={title} detail={detail} setIsOpen={setIsOpen} />
+          <UpdateForm
+            id={item.id}
+            title={item.title}
+            detail={item.detail}
+            closeModal={closeModal}
+            updateBtn={updateBtn}
+          />
         )}
       </>
     );
@@ -66,7 +87,6 @@ function MyList() {
 }
 
 export default MyList;
-
 
 const StList = styled.div`
   padding-left: 20px;
@@ -107,7 +127,8 @@ export const StDeleteBtn = styled.button`
   height: 33px;
   font-size: 12px;
   margin-right: 15px;
-  ${props => props.customStyle};
+  position: ${props => props.custompostion};
+  right: ${props => props.customright};
   &:hover {
     height: 30px;
     color: #ffffff;

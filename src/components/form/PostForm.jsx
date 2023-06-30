@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import { addList } from '../../redux/modules/MainList';
 import { StBtn } from '../Header';
@@ -25,8 +25,6 @@ function PostForm({ setIsOpen }) {
   const detailValue = e => {
     setDetail(e.target.value);
   };
-
-  useEffect(() => {}, [dispatch]);
 
   const addSubmit = async e => {
     e.preventDefault();
@@ -62,7 +60,7 @@ function PostForm({ setIsOpen }) {
             onChange={detailValue}
           ></StTextarea>
           <StBox>
-            <StBtn onClick={addSubmit}>기록하기</StBtn>
+            <StBtn type="submit">기록하기</StBtn>
             <StBtn type="button" onClick={closeModal}>
               취소하기
             </StBtn>

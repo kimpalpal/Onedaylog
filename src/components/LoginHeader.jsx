@@ -14,7 +14,7 @@ function LoginHeader() {
   };
 
   const LogoutBtn = () => navigate('/');
-
+  const MypageBtn = () => navigate('/456');
   return (
     <>
       <StHeader>
@@ -23,7 +23,7 @@ function LoginHeader() {
         <StBtnBox>
           <StNewPageBtn onClick={openModal}>새 포스팅</StNewPageBtn>
           <StLogOutBtn onClick={LogoutBtn}>로그아웃</StLogOutBtn>
-          <StImage />
+          <StImage onClick={MypageBtn} />
         </StBtnBox>
       </StHeader>
 
@@ -73,12 +73,12 @@ const StLogOutBtn = styled.button`
   margin-right: 15px;
 `;
 
-const StImage = styled.button`
+export const StImage = styled.button`
   cursor: pointer;
   text-decoration: none;
   border-radius: 50%;
-  border: solid 1px black;
-  color: #d9d9d9;
+  border: solid 0.1px #fffbfb;
+  color: #e8e8f8;
   width: 25px;
   height: 25px;
   padding: 6px;

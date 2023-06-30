@@ -1,21 +1,13 @@
 import React from 'react';
 import { styled } from 'styled-components';
 
-
-
 function MyInform() {
- 
   return (
     <>
-        <StContainer>
-            <StinFormBox>
-            회원정보
-            아이디:
-            비번:
-            </StinFormBox>
-            <Stimg> </Stimg>
-        </StContainer>
-       
+      <StContainer>
+        <StinFormBox>회원정보 아이디: 비번:</StinFormBox>
+        <Stimg> </Stimg>
+      </StContainer>
     </>
   );
 }
@@ -31,13 +23,13 @@ const StinFormBox = styled.div`
   padding: 20px;
   border: 1px solid black;
   border-radius: 20px;
-
 `;
 
 const StContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #f5f5f7;
 `;
 
 const Stimg = styled.div`
@@ -49,4 +41,4 @@ const Stimg = styled.div`
   padding: 20px;
   border: 1px solid black;
   border-radius: 50%;
-`
+`;

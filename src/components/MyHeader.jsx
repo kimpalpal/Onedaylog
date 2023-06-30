@@ -3,32 +3,34 @@ import { styled } from 'styled-components';
 import { StBtnBox, StHeader, StLogo } from './Header';
 import { useNavigate } from 'react-router-dom';
 import PostForm from './form/PostForm';
+import { StImage } from './LoginHeader';
 
 function MyHeader() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const [isOpen, setIsOpen] = useState(false);
-  
-    const openModal = () => {
-      setIsOpen(true);
-    };
-  
-    const LogoutBtn = () => navigate('/');
-  
-    return (
-      <>
-        <StHeader>
-          <StLogo>사용자이름</StLogo>
-  
-          <StBtnBox>
-            <StNewPageBtn onClick={openModal}>새 포스팅</StNewPageBtn>
-            <StLogOutBtn onClick={LogoutBtn}>로그아웃</StLogOutBtn>
-          </StBtnBox>
-        </StHeader>
-  
-        {isOpen && <PostForm setIsOpen={setIsOpen} />}
-      </>
-    );
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+  const mainpageBtn = () => navigate('/123');
+  const logoutBtn = () => navigate('/');
+  const mypageBtn = () => navigate('/456');
+  return (
+    <>
+      <StHeader>
+        <StLogo onClick={mainpageBtn}>한줄일기</StLogo>
+
+        <StBtnBox>
+          <StNewPageBtn onClick={openModal}>새 포스팅</StNewPageBtn>
+          <StLogOutBtn onClick={logoutBtn}>로그아웃</StLogOutBtn>
+          <StImage onClick={mypageBtn} />
+        </StBtnBox>
+      </StHeader>
+
+      {isOpen && <PostForm setIsOpen={setIsOpen} />}
+    </>
+  );
 }
 
 export default MyHeader;

@@ -51,7 +51,7 @@ export const StHeader = styled.header`
   font-size: 24px;
 `;
 
-export const StLogo = styled.span`
+export const StLogo = styled.button`
   float: left;
   margin-left: 35px;
   margin-top: 8px;
