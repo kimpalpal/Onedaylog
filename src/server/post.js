@@ -5,7 +5,23 @@ const COLLECTION_NAME = 'posts';
 
 export const getPostList = async () => {
   const _collection = collection(db, COLLECTION_NAME);
+
   const docsSnap = await getDocs(_collection);
 
-  return docsSnap.docs;
+  const initialTodos = [];
+
+  docsSnap.forEach(doc => {
+    initialTodos.push({ id: doc.id, ...doc.data() });
+  });
+  return initialTodos;
 };
+
+// export const getPostList = async () => {
+//   const _collection = collection(db, COLLECTION_NAME);
+//   const docsSnap = await getDocs(_collection);
+//   const initialTodos = [];
+//   docsSnap.forEach((doc) =>{
+//     initialTodos.push({id: doc.id, ...doc.data()})
+//   })
+//   return docsSnap.docs;
+// };

@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import { addList } from '../../redux/modules/MainList';
 import { StBtn } from '../Header';
 import { addDoc, collection } from 'firebase/firestore';
-import { db } from '../../server/firebase';
+import { auth, db } from '../../server/firebase';
 import { useDispatch } from 'react-redux';
 
 function PostForm({ setIsOpen }) {
   const dispatch = useDispatch();
   const [title, setTitle] = useState('');
   const [detail, setDetail] = useState('');
+
+  //이메일 id 값 추가
+  const emailId = `${auth.currentUser.email}`;
+
   //리스트 창 닫기
   const closeModal = () => {
     setTitle('');
@@ -26,15 +30,14 @@ function PostForm({ setIsOpen }) {
     setDetail(e.target.value);
   };
 
-  useEffect(() => {}, [dispatch]);
-
   const addSubmit = async e => {
     e.preventDefault();
     const newTodo = {
       uid: crypto.randomUUID(),
       title,
       detail,
-      isDone: false
+      isDone: false,
+      emailId
     };
     const collectionList = collection(db, 'posts');
     const { id } = await addDoc(collectionList, newTodo);
@@ -62,7 +65,7 @@ function PostForm({ setIsOpen }) {
             onChange={detailValue}
           ></StTextarea>
           <StBox>
-            <StBtn onClick={addSubmit}>기록하기</StBtn>
+            <StBtn type="submit">기록하기</StBtn>
             <StBtn type="button" onClick={closeModal}>
               취소하기
             </StBtn>

@@ -1,20 +1,10 @@
 import React, { useState } from 'react';
-import { updateList } from '../../redux/modules/MainList';
 import { StBtn } from '../Header';
 import { StBox, StModalBox, StModalContents, StTextarea } from './PostForm';
 
-function UpdateForm({ uid, setIsOpen, detail, title }) {
-  // const dispatch = useDispatch();
-
+function UpdateForm({ id, closeModal, detail, title, updateBtn }) {
   const [newTitle, setNewTitle] = useState(title);
   const [newDetail, setNewDetail] = useState(detail);
-
-  //리스트 창 닫기
-  const closeModal = () => {
-    setNewTitle('');
-    setNewDetail('');
-    setIsOpen(false);
-  };
 
   //리스트 입력 값
   const newTitleValue = e => {
@@ -26,15 +16,10 @@ function UpdateForm({ uid, setIsOpen, detail, title }) {
   };
 
   //리스트 수정
-  const updateBtn = (uid, newTitle, newDetail) => {
-    updateList(uid, newTitle, newDetail);
-  };
 
   const UpdateBox = event => {
     event.preventDefault();
-
-    updateBtn(uid, newTitle, newDetail);
-
+    updateBtn(id, newTitle, newDetail);
     closeModal();
   };
 
@@ -56,7 +41,7 @@ function UpdateForm({ uid, setIsOpen, detail, title }) {
             onChange={newDetailValue}
           ></StTextarea>
           <StBox>
-            <StBtn onClick={UpdateBox}>수정하기</StBtn>
+            <StBtn type="submit">수정하기</StBtn>
             <StBtn type="button" onClick={closeModal}>
               취소
             </StBtn>

@@ -1,62 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
-import { removeList } from '../redux/modules/MainList';
-import { StBtn } from './Header';
-import UpdateForm from './form/UpdateForm';
 import { getPostList } from '../server/post';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 function Main() {
-  const dispatch = useDispatch();
   const userselect = useSelector(state => state.MainList);
-  const [isOpen, setIsOpen] = useState(false);
   const [list, setList] = useState([]);
-
   const updatePostList = async () => {
     const postList = await getPostList();
 
     setList(postList);
   };
-
   useEffect(() => {
     updatePostList();
   }, [userselect]);
 
-  const openModal = () => {
-    setIsOpen(true);
-  };
-
-  const deleteBtn = uid => {
-    dispatch(removeList(uid));
-  };
-
   return list.map(item => {
-    const { title, detail, uid } = item.data();
-
     return (
       <div key={item.uid}>
         <StList>
           <StBox style={{ position: 'relative' }}>
-            <StTitle key={title}>
-              {title}
-              <StBtn custompostion={'absolute'} customright={'80px'} onClick={openModal}>
-                수정
-              </StBtn>
-
-              <StDeleteBtn
-                custompostion={'absolute'}
-                customright={'0'}
-                onClick={() => deleteBtn(uid)}
-              >
-                삭제
-              </StDeleteBtn>
-            </StTitle>
-
-            <StDetail>{detail}</StDetail>
+            <StTitle key={item.title}>{item.title}</StTitle>
+            <StDetail>{item.detail}</StDetail>
           </StBox>
         </StList>
-
-        {isOpen && <UpdateForm uid={uid} title={title} detail={detail} setIsOpen={setIsOpen} />}
       </div>
     );
   });
