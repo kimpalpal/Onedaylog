@@ -52,7 +52,10 @@ export const StHeader = styled.header`
 `;
 
 export const StLogo = styled.button`
+  background-color: #ffffff;
+  border: 0px solid;
   float: left;
+  font-size: 24px;
   margin-left: 35px;
   margin-top: 8px;
 `;

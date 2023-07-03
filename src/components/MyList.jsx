@@ -8,7 +8,6 @@ import PostBox from './PostBox';
 function MyList() {
   const userselect = useSelector(state => state.MainList);
   const emailID = `${auth.currentUser.email}`;
-  console.log(emailID);
   const [list, setList] = useState([]);
   const updatePostList = async () => {
     const postList = await getPostList();
